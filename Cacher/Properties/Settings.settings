@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cacher.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="listenPort" Type="System.UInt16" Scope="Application">
+      <Value Profile="(Default)">1088</Value>
+    </Setting>
+    <Setting Name="proxy" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">socks=127.0.0.1:1080</Value>
+    </Setting>
+    <Setting Name="proxyHosts" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">cdn.host.com|.example.com</Value>
+    </Setting>
+    <Setting Name="decryptHosts" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="caches" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.pack|.zip</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
