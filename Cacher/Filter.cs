@@ -77,6 +77,41 @@ namespace Cacher
             suffixes = lstSuffixes.ToArray();
         }
 
+        static DateTime GMT2Local(string gmt)
+        {
+            DateTime dt = default;
+            if (string.IsNullOrEmpty(gmt))
+            {
+                return dt;
+            }
+            try
+            {
+                string pattern = null;
+                if (gmt.IndexOf("+0") != -1)
+                {
+                    gmt = gmt.Replace("GMT", "");
+                    pattern = "ddd, dd MMM yyyy HH':'mm':'ss zzz";
+                }
+                if (gmt.ToUpper().IndexOf("GMT") != -1)
+                {
+                    pattern = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
+                }
+                if (pattern != null)
+                {
+                    dt = DateTime.ParseExact(gmt, pattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal);
+                    dt = dt.ToLocalTime();
+                }
+                else
+                {
+                    dt = Convert.ToDateTime(gmt);
+                }
+            }
+            catch
+            {
+            }
+            return dt;
+        }
+
         private static void Log(string str)
         {
             Console.Write("[{0:HH:mm:ss}] - {1}", DateTime.Now, str);

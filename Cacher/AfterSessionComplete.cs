@@ -73,36 +73,5 @@ namespace Cacher
 
             LogLine("{0}...[saved]", file);
         }
-
-        static DateTime GMT2Local(string gmt)
-        {
-            DateTime dt = DateTime.MinValue;
-            try
-            {
-                string pattern = "";
-                if (gmt.IndexOf("+0") != -1)
-                {
-                    gmt = gmt.Replace("GMT", "");
-                    pattern = "ddd, dd MMM yyyy HH':'mm':'ss zzz";
-                }
-                if (gmt.ToUpper().IndexOf("GMT") != -1)
-                {
-                    pattern = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
-                }
-                if (pattern != "")
-                {
-                    dt = DateTime.ParseExact(gmt, pattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal);
-                    dt = dt.ToLocalTime();
-                }
-                else
-                {
-                    dt = Convert.ToDateTime(gmt);
-                }
-            }
-            catch
-            {
-            }
-            return dt;
-        }
     }
 }

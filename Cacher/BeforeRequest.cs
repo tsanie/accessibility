@@ -47,7 +47,23 @@ namespace Cacher
             {
                 oSession.utilCreateResponseAndBypassServer();
                 oSession.LoadResponseFromFile(Path.Combine(Environment.CurrentDirectory, cache));
-                oSession.oResponse["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                var date = GMT2Local(oSession.oResponse["Date"]);
+                var expires = GMT2Local(oSession.oResponse["Expires"]);
+                double seconds;
+                if (date.Year > 1900 && expires.Year > 1900)
+                {
+                    seconds = (expires - date).TotalSeconds;
+                }
+                else
+                {
+                    seconds = -1;
+                }
+                var now = DateTime.Now.ToUniversalTime();
+                oSession.oResponse["Date"] = now.ToString("r");
+                if (seconds > 0)
+                {
+                    oSession.oResponse["Expires"] = now.AddSeconds(seconds).ToString("r");
+                }
                 oSession.Tag = fromCache;
 
                 Console.WriteLine("...[replaced]");
