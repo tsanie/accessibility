@@ -42,7 +42,22 @@ namespace Cacher
                 file = file.Substring(0, index);
             }
 
-            if (exts != null && exts.Length > 0 && !file.OICEndsWithAny(exts))
+            bool cache = false;
+            bool noExts = exts == null || exts.Length == 0;
+            bool noMatches = matches == null || matches.Length == 0;
+            if (noExts && noMatches)
+            {
+                cache = true;
+            }
+            else if (!noExts && file.OICEndsWithAny(exts))
+            {
+                cache = true;
+            }
+            else if (!noMatches && matches.Any(m => file.OICContains(m)))
+            {
+                cache = true;
+            }
+            if (!cache)
             {
                 return;
             }

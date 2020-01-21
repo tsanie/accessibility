@@ -15,12 +15,18 @@ namespace Cacher
         private static string[] decryptSuffixes;
 
         private static string[] exts;
+        private static string[] matches;
 
         private static void ReadHosts()
         {
             FillHosts(Properties.Settings.Default.proxyHosts, ref proxyHosts, ref proxySuffixes);
             FillHosts(Properties.Settings.Default.decryptHosts, ref decryptHosts, ref decryptSuffixes);
-            exts = Properties.Settings.Default.caches.Split('|');
+            var caches = Properties.Settings.Default.caches.Split('|');
+            if (caches != null && caches.Length > 0)
+            {
+                exts = caches.Where(c => c.StartsWith(".")).ToArray();
+                matches = caches.Except(exts).ToArray();
+            }
         }
 
         private static bool NeedProxy(string hostname)
